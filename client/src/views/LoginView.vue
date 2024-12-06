@@ -8,7 +8,7 @@
       <!-- Footer Links -->
       <p class="text-sm text-gray-600">
         Don't have an account? 
-        <a href="/signup" class="text-blue-600 hover:underline">Sign up</a>
+        <a href="/register" class="text-blue-600 hover:underline">Sign up</a>
       </p>
       <p class="text-sm text-gray-600 mt-2">
         Forgot your password? 
