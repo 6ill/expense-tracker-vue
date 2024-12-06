@@ -1,0 +1,6 @@
+flask
+pathlib
+python-dotenv
+Flask-SQLAlchemy
+Flask-Migrate
+mysqlclient
