@@ -3,12 +3,16 @@ import os
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from src.db import db
+from flask_cors import CORS
 
 # loading environment variables
 load_dotenv()
 
 # declaring flask application
 app = Flask(__name__)
+
+# enables CORS
+CORS(app)
 
 app.secret_key = os.environ.get('SECRET_KEY')
 
