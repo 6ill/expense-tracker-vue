@@ -6,3 +6,4 @@ Flask-Migrate
 mysqlclient
 Werkzeug
 pymysql
+flask_cors
