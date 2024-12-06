@@ -83,3 +83,7 @@ methods: {
 
 <style scoped>
 </style>
+  
+  <style scoped>
+  /* Tambahkan gaya untuk register container */
+  </style>

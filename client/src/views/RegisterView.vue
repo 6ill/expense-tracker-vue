@@ -23,30 +23,18 @@ export default {
     RegisterTemplate,
   },
   methods: {
-  async handleRegister({ username, password }) {
-    if (this.isSubmitting) {
-      console.log('handleRegister already in progress');
-      return;
-    }
-    this.isSubmitting = true;
-    console.log('handleRegister called');
-    try {
-      const response = await apiClient.post('/users/register', { username, password });
-      alert(response.data.message);
-    } catch (error) {
-      console.error('Registration error:', error);
-      alert('Registration failed. Please try again.');
-    } finally {
-      this.isSubmitting = false;
-    }
+    async handleRegister({ username, password }) {
+      try {
+        console.log({ username });
+        console.log({ password });
+        const response = await apiClient.post('/users/register', { username, password });
+        alert(response.data.message);
+      } catch (error) {
+        console.error('Registration error:', error);
+        alert('Registration failed. Please try again.');
+      }
+    },
   },
-},
-data() {
-  return {
-    isSubmitting: false, // Prevent multiple calls
-  };
-},
-
 };
 </script>
 
