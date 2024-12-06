@@ -1,4 +1,15 @@
-from src import app,db
+from src import app, db
 
-app.app_context().push()
-db.create_all()
+def create_database():
+    """
+    Membuat semua database yang tercantum dalam src/models
+    """
+    with app.app_context():
+        try:
+            db.create_all()
+            print("Database tables created successfully.")
+        except Exception as e:
+            print(f"Error creating database tables: {e}")
+
+if __name__ == "__main__":
+    create_database()
