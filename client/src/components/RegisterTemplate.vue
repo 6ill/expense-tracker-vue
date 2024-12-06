@@ -59,21 +59,27 @@ export default {
     },
   },
   data() {
-    return {
-      username: '',
-      password: '',
-    };
+  return {
+    username: '',
+    password: '',
+    isSubmitting: false, // Flag to prevent multiple submits
+  };
+},
+methods: {
+  submitForm() {
+    if (this.isSubmitting) {
+      console.log('submitForm already in progress');
+      return;
+    }
+    this.isSubmitting = true;
+    console.log('submitForm called');
+    this.$emit('submit', { username: this.username, password: this.password });
+    this.isSubmitting = false;
   },
-  methods: {
-    submitForm() {
-      // Emit the form data to the parent component
-      this.$emit('submit', { username: this.username, password: this.password });
-    },
-  },
+},
+
 };
 </script>
 
-  
-  <style scoped>
-  /* Tambahkan gaya untuk register container */
-  </style>
+<style scoped>
+</style>
