@@ -39,5 +39,7 @@ def login():
         
         session['user'] = {'id': user.id, 'username': user.username, 'name': user.name}
         session['is_authenticated'] = True
+
+        return {"message": "Login successfully", "status": "success"}
     except Exception as e: 
         return {"message": e, "status": "failed"}
