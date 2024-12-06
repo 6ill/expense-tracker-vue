@@ -32,7 +32,7 @@
     methods: {
       async handleRegister() {
         try {
-          const response = await apiClient.post("/register", {
+          const response = await apiClient.post("/users/register", {
           username: this.username,
           password: this.password
         });
