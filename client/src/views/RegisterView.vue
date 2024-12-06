@@ -16,6 +16,7 @@
   
   <script>
   import RegisterTemplate from '@/components/RegisterTemplate.vue';
+  import axios from 'axios';
   
   export default {
     components: {
@@ -28,12 +29,17 @@
       };
     },
     methods: {
-      handleRegister() {
-        // Placeholder for register logic
-        if (this.username && this.password) {
-          alert(`Registering with: \nUsername: ${this.username}\nPassword: ${this.password}`);
-        } else {
-          alert('Please fill in all fields.');
+      async handleRegister() {
+        try {
+          const response = await axios.post('http://localhost:5000/register', {
+            username: this.username,
+            password: this.password
+          });
+          alert(response.data.message);
+        } catch (error) {
+          // Gunakan variabel error di sini
+          console.error('Registration error:', error);
+          alert('Registration failed. Please try again.');
         }
       }
     }
