@@ -10,14 +10,13 @@ users = Blueprint("users", __name__)
 def register():
     try:
         username = request.form.get('username')
-        name = request.form.get('name')
         password = request.form.get('password')
         user = User.query.filter_by(username=username).first()
 
         if user:
             raise Exception("User with this username has already registered!")
         hashed_password = generate_password_hash(password)
-        new_user = User(username=username, name=name, password=hashed_password)
+        new_user = User(username=username, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         return {"message": "You have been register successfully!", "status": "success"}
@@ -37,7 +36,9 @@ def login():
         if not user or not check_password_hash(user.password, password):
             return {"message": "Please check your login details and try again.", "status": "failed"}
         
-        session['user'] = {'id': user.id, 'username': user.username, 'name': user.name}
+        session['user'] = {'id': user.id, 'username': user.username}
         session['is_authenticated'] = True
+
+        return {"message": "Login successfully", "status": "success"}
     except Exception as e: 
         return {"message": e, "status": "failed"}
