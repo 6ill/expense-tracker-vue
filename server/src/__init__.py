@@ -2,6 +2,7 @@ from flask import Flask
 import os
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
+from src.db import db
 
 # loading environment variables
 load_dotenv()
@@ -18,7 +19,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("SQLALCHEMY_DATABASE_URI_
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = os.environ.get("SQLALCHEMY_TRACK_MODIFICATIONS")
 
 # sql alchemy instance
-db = SQLAlchemy(app)
+db.init_app(app)
+
+from src.models.limit import Limit
+from src.models.transaction import Transaction
+from src.models.user import User
 
 
 # import api blueprint to register it with app
