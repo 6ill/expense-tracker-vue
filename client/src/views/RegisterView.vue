@@ -3,6 +3,7 @@
       :title="'Register'"
       :description="'Create a new account.'"
       :submitButtonText="'Register'"
+      @submit="handleRegister"
     >
       <template #footer-links>
         <!-- Footer Links -->
@@ -17,6 +18,7 @@
   <script>
   import RegisterTemplate from '@/components/RegisterTemplate.vue';
   import axios from 'axios';
+import apiClient from '../../apiClient';
   
   export default {
     components: {
@@ -31,10 +33,7 @@
     methods: {
       async handleRegister() {
         try {
-          const response = await axios.post('http://localhost:5000/register', {
-            username: this.username,
-            password: this.password
-          });
+          const response = await apiClient.post("/register", this.form)
           alert(response.data.message);
         } catch (error) {
           // Gunakan variabel error di sini
