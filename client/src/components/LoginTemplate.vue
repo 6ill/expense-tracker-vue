@@ -6,12 +6,12 @@
 
       <form class="mt-6 space-y-4" @submit.prevent="handleLogin">
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+          <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
           <input
-            type="email"
-            id="email"
-            v-model="email"
-            placeholder="Enter your email"
+            type="text"
+            id="username"
+            v-model="username"
+            placeholder="Enter your username"
             class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none"
             required
           />
