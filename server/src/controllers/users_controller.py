@@ -9,43 +9,53 @@ users = Blueprint("users", __name__)
 @users.route('/register', methods=['POST'])
 def register():
     try:
-        username = request.form.get('username')
-        password = request.form.get('password')
+        data = request.json
+        username = data.get('username')
+        password = data.get('password')
+        print(data)
+        print(username)
+        print(password)
+
+        # Validate input
+        if not username or not password:
+            return jsonify({"message": "Username and password are required", "status": "failed"}), 400
+
+        # Check if user already exists
         user = User.query.filter_by(username=username).first()
-
         if user:
-            raise Exception("User with this username has already registered!")
-        
-        if not user:
-            raise Exception("No user")
+            return jsonify({"message": "User with this username already exists!", "status": "failed"}), 400
 
-        if not password:
-            raise Exception("No password")
-        
+        # Create a new user
         hashed_password = generate_password_hash(password)
         new_user = User(username=username, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({"message": "You have been register successfully!", "status": "success"})
+
+        return jsonify({"message": "You have been registered successfully!", "status": "success"}), 201
+
     except Exception as e:
         db.session.rollback()
-        return jsonify({"message": str(e), "status": "failed"})
+        return jsonify({"message": "Registration failed. Please try again.", "status": "failed", "error": str(e)}), 500
 
 
-@users.route('/login', methods=['POST'])    
+@users.route('/login', methods=['POST'])
 def login():
     try:
-        username = request.form.get('username')
-        password = request.form.get('password')
+        # Get data from JSON payload
+        data = request.json
+        username = data.get('username')
+        password = data.get('password')
 
+        # Check if user exists
         user = User.query.filter_by(username=username).first()
-
         if not user or not check_password_hash(user.password, password):
-            return {"message": "Please check your login details and try again.", "status": "failed"}
-        
+            return jsonify({"message": "Invalid username or password", "status": "failed"}), 401
+
+        # Set session
         session['user'] = {'id': user.id, 'username': user.username}
         session['is_authenticated'] = True
 
-        return jsonify({"message": "Login successfully", "status": "success"})
-    except Exception as e: 
-        return jsonify({"message": str(e), "status": "failed"})
+        return jsonify({"message": "Login successfully", "status": "success"}), 200
+
+    except Exception as e:
+        return jsonify({"message": "Login failed. Please try again.", "status": "failed", "error": str(e)}), 500
