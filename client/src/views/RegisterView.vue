@@ -32,7 +32,10 @@
     methods: {
       async handleRegister() {
         try {
-          const response = await apiClient.post("/register", this.form)
+          const response = await apiClient.post("/register", {
+          username: this.username,
+          password: this.password
+        });
           alert(response.data.message);
         } catch (error) {
           // Gunakan variabel error di sini
