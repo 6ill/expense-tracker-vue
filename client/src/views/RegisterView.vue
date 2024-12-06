@@ -17,8 +17,7 @@
   
   <script>
   import RegisterTemplate from '@/components/RegisterTemplate.vue';
-  import axios from 'axios';
-import apiClient from '../../apiClient';
+  import apiClient from '../../apiClient';
   
   export default {
     components: {
@@ -33,7 +32,10 @@ import apiClient from '../../apiClient';
     methods: {
       async handleRegister() {
         try {
-          const response = await apiClient.post("/register", this.form)
+          const response = await apiClient.post("/register", {
+          username: this.username,
+          password: this.password
+        });
           alert(response.data.message);
         } catch (error) {
           // Gunakan variabel error di sini
