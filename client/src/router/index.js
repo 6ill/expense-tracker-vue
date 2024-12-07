@@ -11,7 +11,7 @@ const routes = [
     children : [
       {
         path: '/',
-        name: 'login',
+        name: 'Login',
         component: LoginView,
       },
       {
