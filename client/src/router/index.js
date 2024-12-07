@@ -3,6 +3,8 @@ import Layout from '../views/Layout.vue';
 import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue'
 import MainWorkspaceView from '@/views/MainWorkspaceView.vue';
+import AddTransactionView from '@/views/AddTransactionView.vue';
+import EditTransactionView from '@/views/EditTransactionView.vue';
 
 const routes = [
   {
@@ -28,6 +30,16 @@ const routes = [
         path: '/main-workspace',
         name: 'MainWorkspace',
         component: MainWorkspaceView,
+      },
+      {
+        path: '/add-transaction',
+        name: 'AddTransaction',
+        component: AddTransactionView,
+      },
+      {
+        path: '/edit-transaction',
+        name: 'EditTransaction',
+        component: EditTransactionView,
       }
     ]
   }
