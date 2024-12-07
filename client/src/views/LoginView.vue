@@ -51,6 +51,7 @@
 
 <script>
 import apiClient from '../../apiClient';
+import { useRouter } from 'vue-router';
 
 export default {
   data() {
@@ -59,6 +60,10 @@ export default {
       password: '',
       isSubmitting: false
     };
+  },
+  setup() {
+    const router = useRouter();
+    return { router };
   },
   methods: {
     async handleLogin() {
@@ -75,7 +80,7 @@ export default {
         });
         alert(response.data.message);
         if (response.data.status === 'success') {
-          // Redirect to another page or perform other actions
+          this.router.push({ name: 'MainWorkspace' });
         }
       } catch (error) {
         console.error('Login error:', error);
