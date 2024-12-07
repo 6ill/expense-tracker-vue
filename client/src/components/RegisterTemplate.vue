@@ -62,7 +62,7 @@ export default {
   return {
     username: '',
     password: '',
-    isSubmitting: false, // Flag to prevent multiple submits
+    isSubmitting: false, 
   };
 },
 methods: {
