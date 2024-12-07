@@ -79,7 +79,7 @@ export default {
         }
       } catch (error) {
         console.error('Login error:', error);
-        alert('Login failed. Please try again.');
+        alert(`${error.response.data.message}`);
       } finally {
         this.isSubmitting = false;
       }

@@ -1,6 +1,7 @@
 from flask import Blueprint, request, session, jsonify
 from src import db
 from src.models.user import User
+from src.models.limit import Limit
 from werkzeug.security import generate_password_hash, check_password_hash
 
 users = Blueprint("users", __name__)
@@ -12,9 +13,6 @@ def register():
         data = request.json
         username = data.get('username')
         password = data.get('password')
-        print(data)
-        print(username)
-        print(password)
 
         # Validate input
         if not username or not password:
@@ -29,6 +27,10 @@ def register():
         hashed_password = generate_password_hash(password)
         new_user = User(username=username, password=hashed_password)
         db.session.add(new_user)
+
+        # Create new limit
+        new_limit = Limit(user_id=new_user.id, food=0, lifestyle=0, travel=0, entertainment=0, other=0)
+        db.session.add(new_limit)
         db.session.commit()
 
         return jsonify({"message": "You have been registered successfully!", "status": "success"}), 201
@@ -59,3 +61,13 @@ def login():
 
     except Exception as e:
         return jsonify({"message": "Login failed. Please try again.", "status": "failed", "error": str(e)}), 500
+
+@users.route('/logout', methods=['POST'])
+def logout():
+    try:
+        session.pop('user', None)
+        session.pop('is_authenticated', None)
+        return jsonify({"message": "Logout successfully", "status": "success"}), 200
+    except Exception as e:
+        return jsonify({"message": "Logout failed. Please try again.", "status": "failed", "error": str(e)}), 500
+    
