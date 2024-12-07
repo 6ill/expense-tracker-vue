@@ -6,7 +6,7 @@ limits = Blueprint("limits", __name__)
 
 
 @limits.route('/', methods=['PUT'])
-def update(user_id):
+def update():
     try:
         data = request.json
         type = data.get('type')
