@@ -10,32 +10,6 @@
             </RouterLink>
           </div>
   
-          <!-- Links (Hidden on Mobile) -->
-          <div class="hidden md:flex space-x-6">
-            <RouterLink
-              to="/"
-              class="text-white hover:text-blue-300 font-medium"
-              active-class="text-blue-300"
-              exact
-            >
-              Home
-            </RouterLink>
-            <RouterLink
-              to="/about"
-              class="text-white hover:text-blue-300 font-medium"
-              active-class="text-blue-300"
-            >
-              About
-            </RouterLink>
-            <RouterLink
-              to="/example"
-              class="text-white hover:text-blue-300 font-medium"
-              active-class="text-blue-300"
-            >
-              Example
-            </RouterLink>
-          </div>
-  
           <!-- Mobile Menu Button -->
           <div class="md:hidden">
             <button
@@ -69,35 +43,7 @@
           </div>
         </div>
       </div>
-  
-      <!-- Mobile Menu -->
-      <div
-        v-show="isMenuOpen"
-        class="md:hidden bg-blue-600 space-y-2 px-4 py-2 shadow-lg"
-      >
-        <RouterLink
-          to="/"
-          class="block text-white hover:text-blue-300 font-medium"
-          active-class="text-blue-300"
-          exact
-        >
-          Home
-        </RouterLink>
-        <RouterLink
-          to="/about"
-          class="block text-white hover:text-blue-300 font-medium"
-          active-class="text-blue-300"
-        >
-          About
-        </RouterLink>
-        <RouterLink
-          to="/example"
-          class="block text-white hover:text-blue-300 font-medium"
-          active-class="text-blue-300"
-        >
-          Example
-        </RouterLink>
-      </div>
+
     </nav>
   </template>
   
