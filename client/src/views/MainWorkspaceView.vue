@@ -51,11 +51,11 @@ export default {
     const startDate = ref('');
     const endDate = ref('');
     const columns = reactive([
-      { name: 'Food', transactions: [], visible: true, limit: 0, total: 0 },
-      { name: 'Lifestyle', transactions: [], visible: true, limit: 0, total: 0 },
-      { name: 'Travel', transactions: [], visible: true, limit: 0, total: 0 },
-      { name: 'Entertainment', transactions: [], visible: true, limit: 0, total: 0 },
-      { name: 'Other', transactions: [], visible: true, limit: 0, total: 0 },
+      { name: 'food', transactions: [], visible: true, limit: 0, total: 0 },
+      { name: 'lifestyle', transactions: [], visible: true, limit: 0, total: 0 },
+      { name: 'travel', transactions: [], visible: true, limit: 0, total: 0 },
+      { name: 'entertainment', transactions: [], visible: true, limit: 0, total: 0 },
+      { name: 'other', transactions: [], visible: true, limit: 0, total: 0 },
     ]);
 
     const visibleColumns = computed(() => {

@@ -27,11 +27,11 @@
           <div>
             <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
             <select id="category" v-model="category" class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none" required>
-              <option value="Food">Food</option>
-              <option value="Lifestyle">Lifestyle</option>
-              <option value="Travel">Travel</option>
-              <option value="Entertainment">Entertainment</option>
-              <option value="Other">Other</option>
+              <option value="food">Food</option>
+              <option value="lifestyle">Lifestyle</option>
+              <option value="travel">Travel</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="other">Other</option>
             </select>
           </div>
           <div>
@@ -77,7 +77,7 @@
   
       const handleSubmit = async () => {
         try {
-          const response = await apiClient.post('/transactions', {
+          const response = await apiClient.post('/transactions/', {
             category: category.value,
             amount: amount.value,
             date: date.value,
