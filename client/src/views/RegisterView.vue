@@ -8,7 +8,7 @@
     <template #footer-links>
       <p class="text-sm text-gray-600">
         Already have an account?
-        <a href="/login" class="text-blue-600 hover:underline">Login</a>
+        <a href="/" class="text-blue-600 hover:underline">Login</a>
       </p>
     </template>
   </RegisterTemplate>
