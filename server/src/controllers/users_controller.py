@@ -27,9 +27,12 @@ def register():
         hashed_password = generate_password_hash(password)
         new_user = User(username=username, password=hashed_password)
         db.session.add(new_user)
+        db.session.commit()
 
         # Create new limit
-        new_limit = Limit(user_id=new_user.id, food=0, lifestyle=0, travel=0, entertainment=0, other=0)
+        user = User.query.filter_by(username=username).first()
+        print(user.id)
+        new_limit = Limit(user_id=user.id, food=0, lifestyle=0, travel=0, entertainment=0, other=0)
         db.session.add(new_limit)
         db.session.commit()
 
