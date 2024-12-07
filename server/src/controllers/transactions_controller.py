@@ -31,7 +31,7 @@ def create():
         if not user: 
             return jsonify({"message": "You have not logged in!", "status": "failed"}), 401
         
-        new_transaction = Transaction(user_id=user.get('id'), date=date, category=category, amount=amount)
+        new_transaction = Transaction(user_id=user.get('id'), date=datetime.strptime(date, "%d-%m-%Y").date(), category=category, amount=amount)
         
         db.session.add(new_transaction)
         db.session.commit()
