@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '../views/Layout.vue';
 import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue'
+import MainWorkspaceView from '@/views/MainWorkspaceView.vue';
 
 const routes = [
   {
@@ -22,6 +23,11 @@ const routes = [
         path: '/register',
         name: 'Register',
         component: RegisterView,
+      },
+      {
+        path: '/main-workspace',
+        name: 'MainWorkspace',
+        component: MainWorkspaceView,
       }
     ]
   }
