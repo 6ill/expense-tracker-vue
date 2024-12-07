@@ -13,7 +13,7 @@
       </div>
       <div class="flex items-center space-x-4">
         <div v-for="(column, index) in columns" :key="index" class="flex items-center space-x-2">
-          <input type="checkbox" v-model="column.visible" @change="toggleColumn(index)" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+          <input type="checkbox" v-model="column.visible" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
           <label class="text-sm font-medium text-gray-700">{{ column.name }}</label>
         </div>
         <button @click="logout" class="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Logout</button>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import apiClient from '../../apiClient';
 
@@ -51,11 +51,11 @@ export default {
     const startDate = ref('');
     const endDate = ref('');
     const columns = reactive([
-      { name: 'A', transactions: [], visible: true, limit: 1000, total: 0 },
-      { name: 'B', transactions: [], visible: true, limit: 1000, total: 0 },
-      { name: 'C', transactions: [], visible: true, limit: 1000, total: 0 },
-      { name: 'D', transactions: [], visible: true, limit: 1000, total: 0 },
-      { name: 'E', transactions: [], visible: true, limit: 1000, total: 0 },
+      { name: 'Food', transactions: [], visible: true, limit: 0, total: 0 },
+      { name: 'Lifestyle', transactions: [], visible: true, limit: 0, total: 0 },
+      { name: 'Travel', transactions: [], visible: true, limit: 0, total: 0 },
+      { name: 'Entertainment', transactions: [], visible: true, limit: 0, total: 0 },
+      { name: 'Other', transactions: [], visible: true, limit: 0, total: 0 },
     ]);
 
     const visibleColumns = computed(() => {
@@ -73,6 +73,34 @@ export default {
       });
     });
 
+    const fetchLimits = async () => {
+      try {
+        const response = await apiClient.get('/limits');
+        if (response.data.status === 'success') {
+          const limits = response.data.limits;
+          columns.forEach(column => {
+            column.limit = limits[column.name.toLowerCase()];
+          });
+        }
+      } catch (error) {
+        console.error('Failed to fetch limits:', error);
+      }
+    };
+
+    const fetchTransactions = async () => {
+      try {
+        for (const column of columns) {
+          const response = await apiClient.get(`/transactions/category/${column.name.toLowerCase()}`);
+          if (response.data.status === 'success') {
+            column.transactions = response.data.transactions;
+            updateTotal(column);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch transactions:', error);
+      }
+    };
+
     const addTransaction = (index) => {
       router.push({ name: 'AddTransaction', params: { column: index } });
     };
@@ -83,7 +111,7 @@ export default {
         router.push({ name: 'EditTransaction', params: { transactionId: transaction.id, column: index } });
       } else {
         columns[index].transactions = columns[index].transactions.filter(t => t.id !== transaction.id);
-        updateTotal(index);
+        updateTotal(columns[index]);
       }
     };
 
@@ -91,6 +119,15 @@ export default {
       const newLimit = prompt('Enter new limit:', columns[index].limit);
       if (newLimit !== null) {
         columns[index].limit = parseFloat(newLimit);
+        updateLimit(columns[index].name.toLowerCase(), newLimit);
+      }
+    };
+
+    const updateLimit = async (type, budget) => {
+      try {
+        await apiClient.put('/limits', { type, budget });
+      } catch (error) {
+        console.error('Failed to update limit:', error);
       }
     };
 
@@ -102,18 +139,23 @@ export default {
       // This will automatically update the filteredTransactions computed property
     };
 
-    const updateTotal = (index) => {
-      columns[index].total = columns[index].transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+    const updateTotal = (column) => {
+      column.total = column.transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
     };
 
     const logout = async () => {
       try {
-        await apiClient.post('/logout');
+        await apiClient.post('/users/logout');
         router.push({ name: 'Login' });
       } catch (error) {
         console.error('Logout error:', error);
       }
     };
+
+    onMounted(() => {
+      fetchLimits();
+      fetchTransactions();
+    });
 
     return {
       startDate,
