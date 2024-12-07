@@ -32,15 +32,15 @@ const routes = [
         component: MainWorkspaceView,
       },
       {
-        path: '/add-transaction',
-        name: 'AddTransaction',
-        component: AddTransactionView,
+        path: '/add-transaction/:category?', 
+        name: 'AddTransaction', 
+        component: AddTransactionView
       },
       {
-        path: '/edit-transaction',
-        name: 'EditTransaction',
-        component: EditTransactionView,
-      }
+        path: '/edit-transaction/:transactionId', 
+        name: 'EditTransaction', 
+        component: EditTransactionView
+      },
     ]
   }
 ]

@@ -24,7 +24,7 @@
         <div class="flex justify-between items-center mb-4">
           <h3 class="text-lg font-medium text-gray-900">{{ column.name }}</h3>
           <div class="flex space-x-2">
-            <button @click="addTransaction(index)" class="bg-blue-500 text-white px-2 py-1 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">+</button>
+            <button @click="addTransaction(column.name)" class="bg-blue-500 text-white px-2 py-1 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">+</button>
             <button @click="editLimit(index)" class="bg-yellow-500 text-white px-2 py-1 rounded-md shadow hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">Edit Limit</button>
           </div>
         </div>
@@ -101,8 +101,8 @@ export default {
       }
     };
 
-    const addTransaction = (index) => {
-      router.push({ name: 'AddTransaction', params: { column: index } });
+    const addTransaction = (category) => {
+      router.push({ name: 'AddTransaction', params: { category } });
     };
 
     const editTransaction = (transaction, index) => {
