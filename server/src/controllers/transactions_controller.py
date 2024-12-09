@@ -13,7 +13,8 @@ def getByCategory(category_name):
         if not user: 
             return jsonify({"message": "You have not logged in!", "status": "failed"}), 401    
         
-        transactions = Transaction.query.filter_by(user_id=user.get('id', -1), category=category_name).all()
+        transactions_data = Transaction.query.filter_by(user_id=user.get('id', -1), category=category_name).all()
+        transactions = [transaction.to_dict() for transaction in transactions_data]
         return jsonify({"transactions": transactions, "status": "success"}), 200
     
     except Exception as e:
@@ -32,7 +33,7 @@ def create():
         if not user: 
             return jsonify({"message": "You have not logged in!", "status": "failed"}), 401
         
-        new_transaction = Transaction(user_id=user.get('id'), date=datetime.strptime(date, "%d-%m-%Y").date(), category=category, amount=amount, desc=desc)
+        new_transaction = Transaction(user_id=user.get('id'), date=date, category=category, amount=amount, desc=desc)
         
         db.session.add(new_transaction)
         db.session.commit()
@@ -60,7 +61,7 @@ def update(transaction_id):
         
         transaction.amount = amount
         transaction.category = category
-        transaction.date = datetime.strptime(date, "%d-%m-%Y").date()
+        transaction.date = date
         transaction.desc = desc
 
         db.session.commit()

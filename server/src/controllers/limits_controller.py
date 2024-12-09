@@ -39,8 +39,7 @@ def getBudgetLimit():
         if not limit_data:
             return jsonify({"message": "Data not found", "status": "failed"}), 401
         
-        
-        return jsonify({"limits": limit_data, "status": "success"}), 200
+        return jsonify({"limits": limit_data.to_dict(), "status": "success"}), 200
     
     except Exception as e:
         return jsonify({"message": "Failed to fetch limit data.", "status": "failed", "error": str(e)}), 500
