@@ -75,7 +75,7 @@ export default {
 
     const fetchLimits = async () => {
       try {
-        const response = await apiClient.get('/limits');
+        const response = await apiClient.get('/limits/');
         if (response.data.status === 'success') {
           const limits = response.data.limits;
           columns.forEach(column => {
@@ -125,7 +125,7 @@ export default {
 
     const updateLimit = async (type, budget) => {
       try {
-        await apiClient.put('/limits', { type, budget });
+        await apiClient.put('/limits/', { type, budget });
       } catch (error) {
         console.error('Failed to update limit:', error);
       }
