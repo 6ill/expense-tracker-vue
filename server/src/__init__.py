@@ -11,8 +11,9 @@ load_dotenv()
 # declaring flask application
 app = Flask(__name__)
 
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 app.secret_key = os.environ.get('SECRET_KEY')
-
 CORS(app, supports_credentials=True)
 # Path for our local sql lite database
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("SQLALCHEMY_DATABASE_URI_DEV")
