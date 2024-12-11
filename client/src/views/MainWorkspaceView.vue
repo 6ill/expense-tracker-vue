@@ -36,7 +36,7 @@
           <div v-for="transaction in filteredTransactions[index]" :key="transaction.id" class="bg-gray-100 p-2 rounded-md shadow cursor-pointer" @dblclick="editTransaction(transaction, index)">
             <p class="text-sm font-medium text-gray-700">{{ transaction.amount }}</p>
             <p class="text-sm text-gray-500">{{ transaction.date }}</p>
-            <p class="text-sm text-gray-600">{{ transaction.description }}</p>
+            <p class="text-sm text-gray-600">{{ transaction.desc }}</p>
           </div>
         </div>
       </div>
@@ -110,12 +110,37 @@ export default {
     };
 
     const editTransaction = (transaction, index) => {
-      const action = confirm('Edit this transaction? Click Cancel to delete.');
+      const action = confirm(`
+        Pilih aksi untuk transaksi:
+        - Klik "OK" untuk mengedit.
+        - Klik "Cancel" untuk menghapus.
+      `);
+
       if (action) {
-        router.push({ name: 'EditTransaction', params: { transactionId: transaction.id, column: index } });
+        // Isi data transaksi ke form edit
+        router.push({
+          name: 'EditTransaction',
+          params: {
+            transactionId: transaction.id,
+            column: index,
+            data: {
+              amount: transaction.amount,
+              date: transaction.date,
+              description: transaction.description,
+            },
+          },
+        });
       } else {
-        columns[index].transactions = columns[index].transactions.filter(t => t.id !== transaction.id);
-        updateTotal(columns[index]);
+        const deleteAction = confirm('Anda yakin ingin menghapus transaksi ini?');
+        if (deleteAction) {
+          // Hapus transaksi dari kolom
+          columns[index].transactions = columns[index].transactions.filter(
+            (t) => t.id !== transaction.id
+          );
+          updateTotal(columns[index]);
+        } else {
+          console.log('Aksi dibatalkan');
+        }
       }
     };
 
