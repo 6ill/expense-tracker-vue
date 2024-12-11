@@ -87,3 +87,22 @@ def get_transaction_by_id(transaction_id):
     
     except Exception as e:
         return jsonify({"message": "Update failed. Please try again.", "status": "failed", "error": str(e)}), 500
+    
+
+@transactions.route('/<int:transaction_id>', methods=['DELETE'])
+def delete_transaction_by_id(transaction_id):
+    try:
+        user = session.get('user')
+        if not user :
+            return jsonify({"message" : "You are not logged in", "status" : "failed"}), 401
+        
+        transaction = Transaction.query.filter_by(id=transaction_id)
+        if not transaction :
+            return jsonify({"message" : "Transaction not found", "status" : "failed"}), 404
+
+        db.session.delete(transaction)
+
+        return jsonify({"message": "Transaction updated successfully", "status" : "success"}), 200
+    
+    except Exception as e:
+        return jsonify({"message": "Update failed. Please try again.", "status": "failed", "error": str(e)}), 500
