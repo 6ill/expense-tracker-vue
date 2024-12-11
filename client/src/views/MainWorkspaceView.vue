@@ -140,7 +140,7 @@ export default {
     };
 
     const updateTotal = (column) => {
-      column.total = column.transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+      column.total = column.transactions.reduce((sum, transaction) => sum + parseFloat(transaction.amount), 0);
     };
 
     const logout = async () => {
