@@ -109,7 +109,7 @@ export default {
       router.push({ name: 'AddTransaction', params: { category } });
     };
 
-    const editTransaction = (transaction, index) => {
+    const editTransaction = async (transaction, index) => {
       const action = confirm(`
         Pilih aksi untuk transaksi:
         - Klik "OK" untuk mengedit.
@@ -133,11 +133,23 @@ export default {
       } else {
         const deleteAction = confirm('Anda yakin ingin menghapus transaksi ini?');
         if (deleteAction) {
-          // Hapus transaksi dari kolom
-          columns[index].transactions = columns[index].transactions.filter(
-            (t) => t.id !== transaction.id
-          );
-          updateTotal(columns[index]);
+          try {
+            // Panggil API untuk menghapus transaksi di backend
+            const response = await apiClient.delete(`/transactions/${transaction.id}`);
+            if (response.data.status === 'success') {
+              // Hapus transaksi dari kolom jika berhasil
+              columns[index].transactions = columns[index].transactions.filter(
+                (t) => t.id !== transaction.id
+              );
+              updateTotal(columns[index]); // Perbarui total kolom
+              alert('Transaksi berhasil dihapus');
+            } else {
+              alert('Gagal menghapus transaksi: ' + response.data.message);
+            }
+          } catch (error) {
+            console.error('Error saat menghapus transaksi:', error);
+            alert('Terjadi kesalahan saat menghapus transaksi.');
+          }
         } else {
           console.log('Aksi dibatalkan');
         }
