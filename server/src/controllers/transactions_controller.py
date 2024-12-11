@@ -55,7 +55,7 @@ def update(transaction_id):
         if not user :
             return jsonify({"message" : "You are not logged in", "status" : "failed"}), 401
         
-        transaction = Transaction.query.filter_by(id=transaction_id)
+        transaction = Transaction.query.filter_by(id=transaction_id).first()
         if not transaction :
             return jsonify({"message" : "Transaction not found", "status" : "failed"}), 404
         
@@ -96,7 +96,7 @@ def delete_transaction_by_id(transaction_id):
         if not user :
             return jsonify({"message" : "You are not logged in", "status" : "failed"}), 401
         
-        transaction = Transaction.query.filter_by(id=transaction_id)
+        transaction = Transaction.query.filter_by(id=transaction_id).first()
         if not transaction :
             return jsonify({"message" : "Transaction not found", "status" : "failed"}), 404
 
