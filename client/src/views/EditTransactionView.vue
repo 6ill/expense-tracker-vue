@@ -76,7 +76,15 @@
             const transaction = response.data.transaction;
             category.value = transaction.category;
             amount.value = transaction.amount;
-            date.value = transaction.date;
+            
+            const dateTimeObject = new Date(transaction.date);
+            const pad = (num) => String(num).padStart(2, '0');
+            const year = dateTimeObject.getFullYear();
+            const month = pad(dateTimeObject.getMonth() + 1);
+            const day = pad(dateTimeObject.getDate());
+            const dateString = `${year}-${month}-${day}`;
+            
+            date.value = dateString;
             description.value = transaction.description;
           }
         } catch (error) {
