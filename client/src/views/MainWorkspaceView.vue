@@ -20,7 +20,11 @@
       </div>
     </header>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-      <div v-for="(column, index) in visibleColumns" :key="index" :class="{'bg-red-100': column.total > column.limit}" class="bg-white p-4 rounded-lg shadow">
+      <div 
+        v-for="(column, index) in visibleColumns" 
+        :key="index"
+        :class="column.total > column.limit ? 'bg-red-100' : 'bg-white'"
+        class="p-4 rounded-lg shadow">
         <div class="flex justify-between items-center mb-4">
           <h3 class="text-lg font-medium text-gray-900">{{ column.name }}</h3>
           <div class="flex space-x-2">
@@ -141,6 +145,7 @@ export default {
 
     const updateTotal = (column) => {
       column.total = column.transactions.reduce((sum, transaction) => sum + parseFloat(transaction.amount), 0);
+      console.log(`Updated total for ${column.name}:`, column.total, 'Limit:', column.limit);
     };
 
     const logout = async () => {
