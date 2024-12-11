@@ -7,7 +7,7 @@ transactions = Blueprint("transactions", __name__)
 
 
 @transactions.route('/category/<category_name>')
-def getByCategory(category_name):
+def getByCategory(category_name, methods=['GET']):
     try:
         user = session.get('user')
         if not user: 
@@ -66,6 +66,24 @@ def update(transaction_id):
 
         db.session.commit()
         return jsonify({"message": "Transaction updated successfully", "status" : "success"}), 200
+    
+    except Exception as e:
+        return jsonify({"message": "Update failed. Please try again.", "status": "failed", "error": str(e)}), 500
+    
+
+@transactions.route('/<int:transaction_id>', methods=['GET'])
+def get_transaction_by_id(transaction_id):
+    try:
+       
+        user = session.get('user')
+        if not user :
+            return jsonify({"message" : "You are not logged in", "status" : "failed"}), 401
+        
+        transaction = Transaction.query.filter_by(id=transaction_id).first()
+        if not transaction :
+            return jsonify({"message" : "Transaction not found", "status" : "failed"}), 404
+        
+        return jsonify({"transaction": transaction.to_dict(), "status" : "success"}), 200
     
     except Exception as e:
         return jsonify({"message": "Update failed. Please try again.", "status": "failed", "error": str(e)}), 500
