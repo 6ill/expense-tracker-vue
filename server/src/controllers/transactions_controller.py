@@ -101,7 +101,7 @@ def delete_transaction_by_id(transaction_id):
             return jsonify({"message" : "Transaction not found", "status" : "failed"}), 404
 
         db.session.delete(transaction)
-
+        db.session.commit()
         return jsonify({"message": "Transaction updated successfully", "status" : "success"}), 200
     
     except Exception as e:
