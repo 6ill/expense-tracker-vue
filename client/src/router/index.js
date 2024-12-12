@@ -15,6 +15,13 @@ const routes = [
         path: '/',
         name: 'Login',
         component: LoginView,
+        beforeEnter: (to, from, next) => {
+          if (localStorage.getItem('isAuthenticated') === true) {
+            next({ name: 'Login' }); 
+          } else {
+            next()
+          }
+        },
       },
       {
         path: '/about',
@@ -30,16 +37,37 @@ const routes = [
         path: '/main-workspace',
         name: 'MainWorkspace',
         component: MainWorkspaceView,
+        beforeEnter: (to, from, next) => {
+          if (localStorage.getItem('isAuthenticated') === true) {
+            next(); 
+          } else {
+            next({ name: 'Login' })
+          }
+        },
       },
       {
         path: '/add-transaction/:category?', 
         name: 'AddTransaction', 
-        component: AddTransactionView
+        component: AddTransactionView,
+        beforeEnter: (to, from, next) => {
+          if (localStorage.getItem('isAuthenticated') === true) {
+            next(); 
+          } else {
+            next({ name: 'Login' })
+          }
+        },
       },
       {
         path: '/edit-transaction/:transactionId', 
         name: 'EditTransaction', 
-        component: EditTransactionView
+        component: EditTransactionView,
+        beforeEnter: (to, from, next) => {
+          if (localStorage.getItem('isAuthenticated') === true) {
+            next(); 
+          } else {
+            next({ name: 'Login' })
+          }
+        },
       },
     ]
   }

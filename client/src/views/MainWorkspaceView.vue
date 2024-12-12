@@ -188,6 +188,7 @@ export default {
     const logout = async () => {
       try {
         await apiClient.post('/users/logout');
+        localStorage.removeItem('isAuthenticated');
         router.push({ name: 'Login' });
       } catch (error) {
         console.error('Logout error:', error);
