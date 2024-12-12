@@ -4,9 +4,9 @@
         <div class="flex justify-between items-center h-16">
           <!-- Logo -->
           <div class="flex-shrink-0">
-            <RouterLink to="/" class="flex items-center space-x-3">
+            <RouterLink to="" class="flex items-center space-x-3">
               <img src="@/assets/logo.svg" alt="Vue Logo" class="h-10 w-10" />
-              <span class="text-2xl font-semibold text-white">IBDA Consultation</span>
+              <span class="text-2xl font-semibold text-white">IBDA Expense Tracker</span>
             </RouterLink>
           </div>
   
