@@ -17,10 +17,15 @@
 <script>
 import RegisterTemplate from '@/components/RegisterTemplate.vue';
 import apiClient from '../../apiClient';
+import { useRouter } from 'vue-router';
 
 export default {
   components: {
     RegisterTemplate,
+  },
+  setup() {
+    const router = useRouter();
+    return { router };
   },
   methods: {
   async handleRegister({ username, password }) {
@@ -33,6 +38,10 @@ export default {
     try {
       const response = await apiClient.post('/users/register', { username, password });
       alert(response.data.message);
+      if (response.data.status === 'success') {
+          localStorage.username = username;
+          this.router.push({ name: 'Login' });
+        }
     } catch (error) {
       console.error('Registration error:', error);
       alert('Registration failed. Please try again.');

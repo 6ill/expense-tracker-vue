@@ -40,10 +40,6 @@
           Don't have an account? 
           <a href="/register" class="text-blue-600 hover:underline">Sign up</a>
         </p>
-        <p class="text-sm text-gray-600 mt-2">
-          Forgot your password? 
-          <a href="/reset-password" class="text-blue-600 hover:underline">Reset here</a>
-        </p>
       </div>
     </div>
   </div>
@@ -56,7 +52,7 @@ import { useRouter } from 'vue-router';
 export default {
   data() {
     return {
-      username: '',
+      username: localStorage.getItem('username') || '',
       password: '',
       isSubmitting: false
     };
@@ -80,6 +76,7 @@ export default {
         });
         alert(response.data.message);
         if (response.data.status === 'success') {
+          localStorage.isAuthenticated = true;
           this.router.push({ name: 'MainWorkspace' });
         }
       } catch (error) {
