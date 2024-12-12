@@ -16,8 +16,8 @@ const routes = [
         name: 'Login',
         component: LoginView,
         beforeEnter: (to, from, next) => {
-          if (localStorage.getItem('isAuthenticated') === true) {
-            next({ name: 'Login' }); 
+          if (localStorage.getItem('isAuthenticated') === 'true') {
+            next({ name: 'MainWorkspace' }); 
           } else {
             next()
           }
@@ -38,7 +38,7 @@ const routes = [
         name: 'MainWorkspace',
         component: MainWorkspaceView,
         beforeEnter: (to, from, next) => {
-          if (localStorage.getItem('isAuthenticated') === true) {
+          if (localStorage.getItem('isAuthenticated') === 'true') {
             next(); 
           } else {
             next({ name: 'Login' })
@@ -50,7 +50,7 @@ const routes = [
         name: 'AddTransaction', 
         component: AddTransactionView,
         beforeEnter: (to, from, next) => {
-          if (localStorage.getItem('isAuthenticated') === true) {
+          if (localStorage.getItem('isAuthenticated') === 'true') {
             next(); 
           } else {
             next({ name: 'Login' })
@@ -62,7 +62,7 @@ const routes = [
         name: 'EditTransaction', 
         component: EditTransactionView,
         beforeEnter: (to, from, next) => {
-          if (localStorage.getItem('isAuthenticated') === true) {
+          if (localStorage.getItem('isAuthenticated') === 'true') {
             next(); 
           } else {
             next({ name: 'Login' })

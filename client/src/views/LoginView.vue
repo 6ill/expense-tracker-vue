@@ -76,7 +76,7 @@ export default {
         });
         alert(response.data.message);
         if (response.data.status === 'success') {
-          localStorage.isAuthenticated = true;
+          localStorage.isAuthenticated = 'true';
           this.router.push({ name: 'MainWorkspace' });
         }
       } catch (error) {
